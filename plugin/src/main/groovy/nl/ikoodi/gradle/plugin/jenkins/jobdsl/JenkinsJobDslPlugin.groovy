@@ -26,11 +26,44 @@ class JenkinsJobDslPlugin implements Plugin<Project> {
     static final String PLUGIN_GROUP_NAME = 'Jenkins JobDSL'
     static final String GENERATE_TASK_NAME = 'generateJenkinsJobs'
     static final String PREPARE_WORKSPACE_TASK_NAME = 'prepareJobDslWorkspace'
+    static final String CONFIGURATION_NAME = 'jobdsl'
 
     @Override
     void apply(Project project) {
-        project.extensions.create(PLUGIN_EXT_NAME, JenkinsJobDslPluginExtension, project)
+        createConfiguration(project)
+
+        def extension = project.extensions.create(PLUGIN_EXT_NAME, JenkinsJobDslPluginExtension, project)
+        configureToolDependencies(project, extension)
+
         project.task(PREPARE_WORKSPACE_TASK_NAME, type: PrepareWorkspaceTask)
         project.task(GENERATE_TASK_NAME, type: GenerateConfigsTask, dependsOn: PREPARE_WORKSPACE_TASK_NAME)
     }
+
+    private void createConfiguration(Project project) {
+        project.configurations.create(CONFIGURATION_NAME).with {
+            visible = false
+            transitive = true
+            description = "The Jenkins JobDSL libraries to be used for this project."
+        }
+    }
+
+    private void configureToolDependencies(Project project, extension) {
+//        addJcenterRepository(project)
+        def conf = project.configurations[CONFIGURATION_NAME]
+        conf.incoming.beforeResolve {
+            if (conf.dependencies.empty) {
+                conf.dependencies.add(
+                        project.dependencies.create("org.jenkins-ci.plugins:job-dsl-core:${extension.toolVersion}")
+                )
+            }
+        }
+    }
+
+//    private addJcenterRepository(Project project) {
+//        project.buildscript {
+//            repositories {
+//                jcenter()
+//            }
+//        }
+//    }
 }
