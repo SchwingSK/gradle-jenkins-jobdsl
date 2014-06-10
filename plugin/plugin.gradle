@@ -1,9 +1,11 @@
 apply plugin: 'groovy'
 apply plugin: 'maven-publish'
+apply from: "${rootDir}/gradle/providedConfiguration.gradle"
 
 dependencies {
     compile gradleApi()
     compile 'org.codehaus.groovy:groovy:2.3.0'
+//    provided 'org.jenkins-ci.plugins:job-dsl-core:1.23'
     compile 'org.jenkins-ci.plugins:job-dsl-core:1.23'
 
     testCompile('org.spockframework:spock-core:0.7-groovy-2.0') {

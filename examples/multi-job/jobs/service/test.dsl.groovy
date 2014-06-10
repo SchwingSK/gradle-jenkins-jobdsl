@@ -1,3 +1,3 @@
 job {
-    name 'APP2_Test'
+    name 'SVE_Test'
 }

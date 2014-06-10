@@ -12,7 +12,12 @@ buildscript {
 apply plugin: 'base' // not needed for plugin, but provides the 'clean' task
 apply plugin: 'jenkins-jobdsl'
 
+//dependencies {
+//    jobdsl 'org.jenkins-ci.plugins:job-dsl-core:1.23'
+//}
+
 jenkinsJobDsl {
+    toolVersion = '1.23'
     jobConfigs {
         from file('project.dsl.groovy')
     }

@@ -28,6 +28,7 @@ class JenkinsJobDslPluginExtension {
     String dslFilePattern = DEFAULT_DSL_FILE_PATTERN
     String workspaceBuildPath = new File(baseOutputPath, 'workspace').absolutePath
     String generatedOutputPath = new File(baseOutputPath, 'generated').absolutePath
+    String toolVersion = '1.23'
 
     JenkinsJobDslPluginExtension(Project project) {
         this.project = project
