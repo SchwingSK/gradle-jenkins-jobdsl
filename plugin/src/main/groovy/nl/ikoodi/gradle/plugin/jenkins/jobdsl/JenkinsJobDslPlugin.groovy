@@ -48,7 +48,6 @@ class JenkinsJobDslPlugin implements Plugin<Project> {
     }
 
     private void configureToolDependencies(Project project, extension) {
-//        addJcenterRepository(project)
         def conf = project.configurations[CONFIGURATION_NAME]
         conf.incoming.beforeResolve {
             if (conf.dependencies.empty) {
@@ -57,13 +56,13 @@ class JenkinsJobDslPlugin implements Plugin<Project> {
                 )
             }
         }
+        conf.incoming.afterResolve {
+            getClass().classLoader.loadClass('javaposse.jobdsl.dsl.FileJobManagement')
+            getClass().classLoader.loadClass('javaposse.jobdsl.dsl.NameNotProvidedException')
+            getClass().classLoader.loadClass('javaposse.jobdsl.dsl.ConfigurationMissingException')
+            getClass().classLoader.loadClass('javaposse.jobdsl.dsl.DslScriptLoader')
+            getClass().classLoader.loadClass('javaposse.jobdsl.dsl.GeneratedItems')
+            getClass().classLoader.loadClass('javaposse.jobdsl.dsl.ScriptRequest')
+        }
     }
-
-//    private addJcenterRepository(Project project) {
-//        project.buildscript {
-//            repositories {
-//                jcenter()
-//            }
-//        }
-//    }
 }

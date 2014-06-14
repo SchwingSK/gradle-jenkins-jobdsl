@@ -17,7 +17,7 @@ apply plugin: 'jenkins-jobdsl'
 //}
 
 jenkinsJobDsl {
-    toolVersion = '1.23'
+    toolVersion = '1.22'
     jobConfigs {
         from file('project.dsl.groovy')
     }

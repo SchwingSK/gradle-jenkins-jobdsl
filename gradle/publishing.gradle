@@ -49,7 +49,7 @@ if (project.hasProperty('bintrayUser') && project.hasProperty('bintrayKey')) {
     bintray {
         user = project.bintrayUser
         key = project.bintrayKey
-        def passPhrase = project.bintraySignPassphrase
+        def passPhrase = project.hasProperty('bintraySignPassphrase') ? project.bintraySignPassphrase : null
         publications = ['main']
         pkg {
             repo = 'gradle-plugins'
