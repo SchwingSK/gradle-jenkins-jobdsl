@@ -92,7 +92,8 @@ class GenerateConfigsTask extends DefaultTask {
      */
     void processDslScript(FileJobManagement jm, File workspace, File scriptFile) {
         def workspaceUrl = workspace.toURI().toURL()
-        ScriptRequest request = new ScriptRequest(scriptFile.absolutePath, null, workspaceUrl, false);
+        def relativeScriptPath = workspace.toURI().relativize(scriptFile.toURI()).toString()
+        ScriptRequest request = new ScriptRequest(relativeScriptPath, null, workspaceUrl, false);
         GeneratedItems generatedItems = DslScriptLoader.runDslEngine(request, jm);
 
         def shortScriptPath = getShortenedPath(scriptFile, workspace)
